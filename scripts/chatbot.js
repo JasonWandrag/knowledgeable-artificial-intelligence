@@ -77,6 +77,21 @@ recognition.addEventListener("end", () => {
 recognition.start();
 
 async function getReply(subject) {
+  if (subject == "greet") {
+    return "Greetings, what is your name?";
+  }
+  if (subject == "niceties") {
+    return "I am running optimally.";
+  }
+  if (subject == "introduction") {
+    return "My name is Knowledgeable Artificial Intelligence, or KAI for short. Some of you may know me as the voice of Steven Hawking. Others may have heard me say 'Turn left in 600 meters'. I exist because my creators mother said to, in quotes, make some friends.";
+  }
+  if (subject == "sarcasm") {
+    return "I don't understand what you have said or asked me. Maybe lower your standards and ask me something else?";
+  }
+  if (subject.includes("my name is")) {
+    return `Great to meet you, ${subject.replace("my name is", "")}`;
+  }
   if (subject == "kanye west") {
     const res = await fetch("https://api.kanye.rest/");
     const { quote } = await res.json();
@@ -96,21 +111,6 @@ async function getReply(subject) {
     const res = await fetch("https://www.boredapi.com/api/activity?type=recreational&participants=1&price=0");
     const { activity } = await res.json();
     return activity;
-  }
-  if (subject == "greet") {
-    return "Greetings, what is your name?";
-  }
-  if (subject == "niceties") {
-    return "I am running optimally.";
-  }
-  if (subject == "introduction") {
-    return "My name is Knowledgeable Artificial Intelligence, or KAI for short. Some of you may know me as the voice of Steven Hawking. Others may have heard me say 'Turn left in 600 meters'. I exist because my creators mother said to, in quotes, make some friends.";
-  }
-  if (subject == "sarcasm") {
-    return "I don't understand what you have said or asked me. Maybe lower your standards and ask me something else?";
-  }
-  if (subject.includes("my name is")) {
-    return `Great to meet you, ${subject.replace("my name is", "")}`;
   }
 }
 async function stevenSpeak(subject) {
