@@ -68,6 +68,10 @@ recognition.addEventListener("end", () => {
   )
     stevenSpeak("introduction");
   else if (
+    myResponse.toLowerCase().includes("thank you")
+  )
+    stevenSpeak("gratitude");
+  else if (
     myResponse.toLowerCase().includes("my name is")
   )
     stevenSpeak(myResponse);
@@ -88,6 +92,9 @@ async function getReply(subject) {
   }
   if (subject == "sarcasm") {
     return "I don't understand what you have said or asked me. Maybe lower your standards and ask me something else?";
+  }
+  if (subject == "gratitude") {
+    return "You are welcome.";
   }
   if (subject.includes("my name is")) {
     return `Great to meet you, ${subject.replace("my name is", "")}`;
