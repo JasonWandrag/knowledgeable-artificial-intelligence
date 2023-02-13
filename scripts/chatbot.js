@@ -42,6 +42,22 @@ recognition.addEventListener("end", () => {
   )
     stevenSpeak("chuck norris");
   else if (
+    myResponse.toLowerCase().includes("a fact") ||
+    myResponse.toLowerCase().includes("something i didn't know")
+  )
+    stevenSpeak("useless fact");
+  else if (
+    myResponse.toLowerCase().includes("give me advice") ||
+    myResponse.toLowerCase().includes("i need help") ||
+    myResponse.toLowerCase().includes("i need advice")
+  )
+    stevenSpeak("advice");
+  else if (
+    myResponse.toLowerCase().includes("tech phrase") ||
+    myResponse.toLowerCase().includes("technical jargon")
+  )
+    stevenSpeak("tech");
+  else if (
     myResponse.toLowerCase().includes("tell me a joke") ||
     myResponse.toLowerCase().includes("make me laugh")
   )
@@ -149,6 +165,27 @@ async function getReply(subject) {
     const { activity } = await res.json();
     return activity;
   }
+  if (subject == "useless fact") {
+    const res = await fetch(
+      "https://uselessfacts.jsph.pl/random.json?language=en"
+    );
+    const { text } = await res.json();
+    return text;
+  }
+  if (subject == "tech") {
+    const res = await fetch(
+      "https://techy-api.vercel.app/api/json"
+    );
+    const { message } = await res.json();
+    return message;
+  }
+  if (subject == "advice") {
+    const res = await fetch(
+      "https://api.adviceslip.com/advice"
+    );
+    const { slip } = await res.json();
+    return slip.advice;
+  }
 }
 async function stevenSpeak(subject) {
   isReplying = true;
@@ -156,7 +193,6 @@ async function stevenSpeak(subject) {
   const steven = new SpeechSynthesisUtterance(quote);
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
-  console.table(voices)
   const selectedVoice = voices.find(
     (voice) => voice.name === "Daniel (Enhanced)"
   );
