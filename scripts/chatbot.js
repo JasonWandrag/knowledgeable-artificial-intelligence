@@ -101,80 +101,80 @@ recognition.addEventListener("result", (e) => {
 recognition.addEventListener("end", () => {
   numberOfUnknownCommands++;
   if (numberOfUnknownCommands == 5) {
-    stevenSpeak("sarcasm")
+    kaiSpeak("sarcasm")
     numberOfUnknownCommands = 0;
   };
   if (
     myResponse.toLowerCase().includes("kanye") ||
     myResponse.toLowerCase().includes("west")
   )
-    stevenSpeak("kanye west");
+    kaiSpeak("kanye west");
   else if (
     myResponse.toLowerCase().includes("chuck") ||
     myResponse.toLowerCase().includes("norris")
   )
-    stevenSpeak("chuck norris");
+    kaiSpeak("chuck norris");
   else if (
     myResponse.toLowerCase().includes("a fact") ||
     myResponse.toLowerCase().includes("random fact") ||
     myResponse.toLowerCase().includes("something i didn't know")
   )
-    stevenSpeak("useless fact");
+    kaiSpeak("useless fact");
   else if (
     myResponse.toLowerCase().includes("give me advice") ||
     myResponse.toLowerCase().includes("i need help") ||
     myResponse.toLowerCase().includes("i need advice")
   )
-    stevenSpeak("advice");
+    kaiSpeak("advice");
   else if (
     myResponse.toLowerCase().includes("tech phrase") ||
     myResponse.toLowerCase().includes("technical jargon")
   )
-    stevenSpeak("tech");
+    kaiSpeak("tech");
   else if (
     myResponse.toLowerCase().includes("tell me a joke") ||
     myResponse.toLowerCase().includes("make me laugh")
   )
-    stevenSpeak("joke");
+    kaiSpeak("joke");
   else if (
     myResponse.toLowerCase().includes("hello") ||
     myResponse.toLowerCase().includes("good morning") ||
     myResponse.toLowerCase().includes("good afternoon") ||
     myResponse.toLowerCase().includes("good evening")
   )
-    stevenSpeak("greet");
+    kaiSpeak("greet");
   else if (
     myResponse.toLowerCase().includes("i'm bored") ||
     myResponse.toLowerCase().includes("give me something to do") ||
     myResponse.toLowerCase().includes("what can i do")
   )
-    stevenSpeak("activity");
+    kaiSpeak("activity");
   else if (
     myResponse.toLowerCase().includes("how are you") ||
     myResponse.toLowerCase().includes("are you well")
   )
-    stevenSpeak("niceties");
+    kaiSpeak("niceties");
   else if (
     myResponse.toLowerCase().includes("i am sorry") ||
     myResponse.toLowerCase().includes("i'm sorry") ||
     myResponse.toLowerCase().includes("my bad")
   )
-    stevenSpeak("apologies");
+    kaiSpeak("apologies");
   else if (
     myResponse.toLowerCase().includes("who are you") ||
     myResponse.toLowerCase().includes("what is your name") ||
     myResponse.toLowerCase().includes("introduce yourself")
   )
-    stevenSpeak("introduction");
+    kaiSpeak("introduction");
   else if (myResponse.toLowerCase().includes("thank you"))
-    stevenSpeak("gratitude");
+    kaiSpeak("gratitude");
   else if (
     myResponse.toLowerCase().includes("**") ||
     myResponse.toLowerCase().includes("dick")
   )
-    stevenSpeak("profanity");
+    kaiSpeak("profanity");
   else if (myResponse.toLowerCase().includes("my name is"))
-    stevenSpeak(myResponse);
+    kaiSpeak(myResponse);
   question = textMessage("question");
   if (!isReplying) recognition.start();
 });
@@ -247,25 +247,25 @@ async function getReply(subject) {
     return slip.advice;
   }
 }
-async function stevenSpeak(subject) {
+async function kaiSpeak(subject) {
   isReplying = true;
   const quote = await getReply(subject);
-  const steven = new SpeechSynthesisUtterance(quote);
+  const kai = new SpeechSynthesisUtterance(quote);
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
   const selectedVoice = voices.find(
     (voice) => voice.name === "Daniel (Enhanced)"
   );
-  steven.voice = selectedVoice;
+  kai.voice = selectedVoice;
   reply.innerHTML = quote;
   chatbox.appendChild(reply);
-  steven.addEventListener("end", () => {
+  kai.addEventListener("end", () => {
     reply = textMessage("reply");
     synth.cancel();
     isReplying = false;
     myResponse = "";
     recognition.start();
   });
-  synth.speak(steven);
+  synth.speak(kai);
   window.scrollTo(0, document.body.scrollHeight);
 }
