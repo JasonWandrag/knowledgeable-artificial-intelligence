@@ -8,6 +8,7 @@ let isReplying = false;
 let myResponse = "";
 let nameOfPerson = "";
 let numberOfUnknownCommands = 0;
+let currentVoice = "Daniel (Enhanced)"
 function randomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
@@ -166,6 +167,18 @@ recognition.addEventListener("end", () => {
     myResponse.toLowerCase().includes("introduce yourself")
   )
     kaiSpeak("introduction");
+  else if (
+    myResponse.toLowerCase().includes("whisper") ||
+    myResponse.toLowerCase().includes("keep quiet") ||
+    myResponse.toLowerCase().includes("quieten down")
+  )
+    kaiSpeak("whisper");
+  else if (
+    myResponse.toLowerCase().includes("speak louder") ||
+    myResponse.toLowerCase().includes("i can't hear you") ||
+    myResponse.toLowerCase().includes("speak up")
+  )
+    kaiSpeak("shout");
   else if (myResponse.toLowerCase().includes("thank you"))
     kaiSpeak("gratitude");
   else if (
@@ -202,6 +215,14 @@ async function getReply(subject) {
   }
   if (subject == "gratitude") {
     return youreWelcome(nameOfPerson)[randomIndex(youreWelcome())];
+  }
+  if (subject == "whisper") {
+    currentVoice = "Whisper"
+    return "I'll keep it down";
+  }
+  if (subject == "shout") {
+    currentVoice = "Daniel (Enhanced)"
+    return "I can finally speak normally";
   }
   if (subject.includes("my name is")) {
     nameOfPerson = subject.replace("my name is", "");
@@ -253,8 +274,9 @@ async function kaiSpeak(subject) {
   const kai = new SpeechSynthesisUtterance(quote);
   const synth = window.speechSynthesis;
   const voices = synth.getVoices();
+  console.log("🚀 ~ file: chatbot.js:267 ~ kaiSpeak ~ voices", voices)
   const selectedVoice = voices.find(
-    (voice) => voice.name === "Daniel (Enhanced)"
+    (voice) => voice.name === currentVoice
   );
   kai.voice = selectedVoice;
   reply.innerHTML = quote;
